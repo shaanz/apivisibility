@@ -1,4 +1,4 @@
-# apisec
+# apivisibility
 The project displays running a sample nodejs app and elk dashboard in container environment 
 Together the samples can be used to demonstrate or used for API Management demos. 
 
@@ -11,7 +11,28 @@ APIDemo image
 2) curl http://localhost:3000/api/nf1  to access the app 
 
 ELK Dashboard 
-1) 
+1) docker run -e MAX_MAP_COUNT=262144 -p 5000:5000 -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sbacker/elk
+2) Incase you update the grok filter for logstash. Restart logstash demon  with command: service logstash restart 
+3) Index is preconfigured on ELK image, incase you change it please create a new index
+
+
+Steps to configure NGINX+ Gateway (Please note you need to get your own image for NGINX+)
+
+1) Enable audit on NGINX+ (sample conf file attached) 
+  log_format logstash '$remote_addr - "$api_client_name" [$time_local] "$request" $status $body_bytes_sent "$http_referer"  
+  "$http_user_agent" "$http_x_forwarded_for" $apimgmt_environment $apimgmt_definition $apimgmt_entry_point .    
+  "$apimgmt_environment_name" "$apimgmt_definition_name" $jwt_claim_sub';
+2) Install Filebeat NGIN+ image 
+   wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+   echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+   echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+   sudo apt-get update
+   sudo apt-get install filebeat
+3) Configure Filebeat (sample file attached) 
+   1. Edit etc/filebeat/fibeat.yml
+   2. add your logstash location  to output.logstash section 
+   3. add the location of logfile to filebeat input 
+4) Restart filebeat services. service filebeat restart
 
 
 <b> Generate data </b>
