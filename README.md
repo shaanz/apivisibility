@@ -4,7 +4,6 @@ Together the samples can be used to demonstrate or used for API Management demos
 
 Currently the API server only hosts two endpoints 
 / and /api/nf1.  
-
 /nf1 is coded to randomly generate error
 
 APIDemo image
@@ -13,6 +12,12 @@ APIDemo image
 
 ELK Dashboard 
 1) 
+
+
+<b> Generate data </b>
+Prereq: curl installed 
+1) edit gendata.sh to reflect the correct IP address for server variable
+2) sh gendata.sh 
 
 
 <b>Build Container Images </b> 
