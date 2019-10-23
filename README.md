@@ -6,17 +6,20 @@ Currently the API server only hosts two endpoints
 / and /api/nf1.  
 /nf1 is coded to randomly generate error
 
-APIDemo image
+<b>APIDemo image </b>
 1) docker run  --name apidemo1 -d -p 3000:3000 sbacker/apidemo
 2) curl http://localhost:3000/api/nf1  to access the app 
 
-ELK Dashboard 
+<b>ELK Dashboard </b>
 1) docker run -e MAX_MAP_COUNT=262144 -p 5000:5000 -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sbacker/elk
 2) Incase you update the grok filter for logstash. Restart logstash demon  with command: service logstash restart 
 3) Index is preconfigured on ELK image, incase you change it please create a new index
 
+<b> NGINX Image </b> 
+You need to procure  license for NGINX+ or use opensource version 
 
-Steps to configure NGINX+ Gateway (Please note you need to get your own image for NGINX+)
+
+<b> Steps to configure NGINX+ Gateway </b>
 
 1) Enable audit on NGINX+ (sample conf file attached) 
   log_format logstash '$remote_addr - "$api_client_name" [$time_local] "$request" $status $body_bytes_sent "$http_referer"  
@@ -47,6 +50,6 @@ Incase you want to extend the API and extend the code
 2) execute  docker build -t apidemo
 
 
-<b> Deploy APIdemo image and ELK Dashboard </b>
+
 
 
