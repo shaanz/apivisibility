@@ -19,7 +19,7 @@ Currently the API server only hosts two endpoints
 You need to procure  license for NGINX+ or use opensource version 
 
 
-<b> Steps to configure NGINX+ Gateway </b>
+<b> Steps to configure NGINX+ Gateway for logging</b>
 
 1) Enable audit on NGINX+ (sample conf file attached) 
   log_format logstash '$remote_addr - "$api_client_name" [$time_local] "$request" $status $body_bytes_sent "$http_referer"  
